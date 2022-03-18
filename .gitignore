@@ -1,0 +1,8 @@
+venv/
+.idea/
+__pycache__/
+detection/model/*
+
+*.jpg
+db.sqlite3
+.gitignore
