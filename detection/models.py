@@ -2,7 +2,7 @@ from django.db import models
 from user.models import CustomUser
 
 
-class DetectedTable(models.Model):
+class DetectionTable(models.Model):
     """
     Table with data uploaded for detection
     """
@@ -32,7 +32,7 @@ class Images(models.Model):
     latitude = models.FloatField(verbose_name='location latitude', null=True, blank=True)
     longitude = models.FloatField(verbose_name='location longitude', null=True, blank=True)
     count_objects = models.IntegerField(verbose_name='count find objects in image', null=True, blank=True)
-    date_table_id = models.ForeignKey(DetectedTable, on_delete=models.CASCADE, related_name='images')
+    date_table_id = models.ForeignKey(DetectionTable, on_delete=models.CASCADE, related_name='images')
 
     def __str__(self):
         return str(self.url.url)

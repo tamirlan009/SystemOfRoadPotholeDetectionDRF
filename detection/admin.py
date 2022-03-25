@@ -1,4 +1,4 @@
 from django.contrib import admin
-from .models import DetectedTable, Images, TrackerData
+from .models import DetectionTable, Images, TrackerData
 
-admin.site.register([DetectedTable, Images, TrackerData])
+admin.site.register([DetectionTable, Images, TrackerData])

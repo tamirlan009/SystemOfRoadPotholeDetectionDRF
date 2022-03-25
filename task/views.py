@@ -11,7 +11,7 @@ from SystemOfRoadPotholeDetectionDRF import permissions
 from .serializers import TaskTableSerializer, TaskTableDetailSerializer, CreateTaskSerializer, CategorySerializer, \
     UpdateTaskSerializer
 from .models import Task, Images, Category
-
+from notification.models import TaskNotificationTable
 
 class SetPagination(pagination.PageNumberPagination):
     """
@@ -125,6 +125,9 @@ class CreateTask(CreateAPIView):
                 task=task
             )
 
+        notification = TaskNotificationTable(task_id=task, group_id=self.request.user.groups.first(), type='new task')
+        notification.save()
+
 
 class GetCountTask(APIView):
     """
@@ -146,8 +149,6 @@ class GetCountTask(APIView):
                                           & Q(expired=False)).count()
         count_expiring_tasks = queryset.filter(Q(leadDateTime__lte=datetime.today()-timedelta(days=14)) & Q(is_done=False) &
                                                Q(expired=False)).count()
-
-        print(queryset.filter(is_done=False).filter(expired=False))
 
         data = {
             'count_all_tasks': count_all_tasks,

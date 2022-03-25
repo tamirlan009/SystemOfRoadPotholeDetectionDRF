@@ -1,5 +1,5 @@
 from rest_framework import serializers
-from .models import DetectedTable, Images
+from .models import DetectionTable, Images
 
 
 class ImagesSerializer(serializers.ModelSerializer):
@@ -18,7 +18,7 @@ class DetectedTableSerializer(serializers.ModelSerializer):
     """
 
     class Meta:
-        model = DetectedTable
+        model = DetectionTable
         fields = '__all__'
 
 
@@ -30,5 +30,5 @@ class DetailDetectedTableSerializer(serializers.ModelSerializer):
     images = ImagesSerializer(many=True)
 
     class Meta:
-        model = DetectedTable
+        model = DetectionTable
         fields = '__all__'

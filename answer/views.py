@@ -2,6 +2,7 @@ from rest_framework.generics import CreateAPIView
 from rest_framework.response import Response
 from rest_framework import status
 
+from notification.models import TaskNotificationTable
 from .serializers import CreateAnswerSerializer
 from task.models import Task
 from .models import Answer, AnswerImages
@@ -40,3 +41,6 @@ class CreateAnswer(CreateAPIView):
                 url=image,
                 answer=answer
             )
+
+        notification = TaskNotificationTable(task_id=answer.task, group_id=self.request.user.groups.first(), type='answer')
+        notification.save()

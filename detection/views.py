@@ -1,7 +1,7 @@
 from django.db.models import QuerySet
 from rest_framework.generics import ListAPIView, RetrieveAPIView, DestroyAPIView, CreateAPIView
 from .serializers import DetectedTableSerializer, DetailDetectedTableSerializer
-from .models import DetectedTable, Images
+from .models import DetectionTable, Images
 from .tasks import run_detection
 from SystemOfRoadPotholeDetectionDRF.permissions import UserCanView, UserCanCreate
 
@@ -12,7 +12,7 @@ class DetectedList(ListAPIView):
     """
 
     permission_classes = [UserCanView]
-    queryset = DetectedTable.objects.all()
+    queryset = DetectionTable.objects.all()
     serializer_class = DetectedTableSerializer
 
     def get_queryset(self):
@@ -41,7 +41,7 @@ class GetDetailDetection(RetrieveAPIView):
     """
 
     permission_classes = [UserCanView]
-    queryset = DetectedTable
+    queryset = DetectionTable
     serializer_class = DetailDetectedTableSerializer
 
 
@@ -51,7 +51,7 @@ class DeleteDetection(DestroyAPIView):
     """
 
     permission_classes = [UserCanCreate]
-    queryset = DetectedTable.objects.all()
+    queryset = DetectionTable.objects.all()
 
     def perform_destroy(self, instance):
         if instance.creator == self.request.user or self.request.user.is_superuser:
@@ -85,7 +85,7 @@ class RunDetection(CreateAPIView):
     """
 
     permission_classes = [UserCanCreate]
-    queryset = DetectedTable
+    queryset = DetectionTable
     serializer_class = DetectedTableSerializer
 
     def perform_create(self, serializer):

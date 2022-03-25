@@ -22,6 +22,8 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 
 # SECURITY WARNING: keep the secret key used in production secret!
 SECRET_KEY = 'django-insecure-mfb@^qq^)hpbw=^xhobya#8p0jzjq@6ze9n4@17fuu#!f8mi&!'
+ALGORITHM = "HS256"
+
 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
@@ -32,6 +34,7 @@ ALLOWED_HOSTS = []
 # Application definition
 
 INSTALLED_APPS = [
+    'rest_framework_simplejwt',
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
@@ -40,6 +43,8 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'django_celery_results',
     'phonenumber_field',
+    'channels',
+    'rest_framework',
     'user',
     'task',
     'answer',
@@ -81,6 +86,7 @@ TEMPLATES = [
 ]
 
 WSGI_APPLICATION = 'SystemOfRoadPotholeDetectionDRF.wsgi.application'
+ASGI_APPLICATION = 'SystemOfRoadPotholeDetectionDRF.asgi.application'
 
 
 # Database
@@ -154,6 +160,8 @@ REST_FRAMEWORK = {
 SIMPLE_JWT = {
     "ACCESS_TOKEN_LIFETIME": timedelta(minutes=60),
     "REFRESH_TOKEN_LIFETIME": timedelta(days=2),
+    "ALGORITHM": ALGORITHM,
+    "SIGNING_KEY": SECRET_KEY
 }
 
 
@@ -182,10 +190,13 @@ CORS_ALLOWED_ORIGINS = [
 ]
 
 
-
-
-
-
-
+CHANNEL_LAYERS = {
+    'default': {
+        'BACKEND': 'channels_redis.core.RedisChannelLayer',
+        'CONFIG': {
+            "hosts": [('127.0.0.1', 6379)],
+        },
+    },
+}
 
 

@@ -1,12 +1,12 @@
 from SystemOfRoadPotholeDetectionDRF.celery import app
 from detection.detection_files.run_detection import PotholeDetection
-from .models import DetectedTable
+from .models import DetectionTable
 
 
 @app.task
 def run_detection(ident):
 
-    table = DetectedTable.objects.filter(id=ident).first()
+    table = DetectionTable.objects.filter(id=ident).first()
     print('hi')
     d = PotholeDetection(
         'detection/model/yolov4-pothole.weights',
